@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Internal Backend Workflow · ETAD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{font-family:"Plus Jakarta Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased;background:transparent;}
+
+  .workflow{
+    background:transparent;
+    color:#dbe6f5;
+    position:relative;
+    overflow:hidden;
+    padding:64px 0 80px;
+  }
+
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+
+  /* badge */
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:rgba(28,123,209,.15);border:1px solid rgba(28,123,209,.3);font-family:"Sora",sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7fb6ee;margin-bottom:16px;}
+  .badge .dot{width:6px;height:6px;border-radius:50%;background:#1ed0ff;box-shadow:0 0 8px #1ed0ff;flex:0 0 auto;}
+
+  /* heading */
+  .section-title{font-family:"Sora",sans-serif;font-weight:800;font-size:clamp(28px,4vw,46px);line-height:1.06;letter-spacing:-0.025em;color:#fff;margin-bottom:12px;}
+  .section-title .gr{background:linear-gradient(90deg,#7fb6ee,#e0a5d1);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .section-sub{font-size:15px;color:#9eb3d1;max-width:580px;line-height:1.7;margin-bottom:48px;}
+
+  /* flow board */
+  .flow-board{display:grid;grid-template-columns:1fr 1.1fr;gap:18px;align-items:stretch;position:relative;}
+
+  /* arrows between cards */
+  .flow-card{position:relative;}
+  .flow-card:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    right:-14px;top:50%;
+    transform:translateY(-50%);
+    width:0;height:0;
+    border-top:8px solid transparent;
+    border-bottom:8px solid transparent;
+    border-left:10px solid rgba(28,123,209,.5);
+    z-index:2;
+  }
+
+  .flow-card-inner{
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    padding:22px;
+    backdrop-filter:blur(6px);
+    height:100%;
+  }
+  .flow-card-inner h4{color:#fff;font-size:15px;font-weight:700;display:flex;gap:10px;align-items:center;margin-bottom:8px;font-family:"Sora",sans-serif;}
+  .flow-card-inner h4 .dot{width:8px;height:8px;border-radius:50%;background:#1ed0ff;box-shadow:0 0 12px #1ed0ff;flex:0 0 auto;}
+  .desc{font-size:13px;color:#9eb3d1;line-height:1.6;margin-bottom:12px;}
+
+  /* flow steps */
+  .flow-step{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:center;margin-top:8px;}
+  .flow-step .ic{width:32px;height:32px;border-radius:9px;background:rgba(28,123,209,.22);color:#7fb6ee;display:grid;place-items:center;flex:0 0 auto;}
+  .flow-step .lbl{font-weight:600;color:#fff;font-size:13px;font-family:"Sora",sans-serif;}
+  .flow-step .sub{font-size:11.5px;color:#9eb3d1;margin-top:2px;}
+
+  /* status list */
+  .status-list{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+  .status-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:11px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);}
+  .status-row .pip{width:10px;height:10px;border-radius:50%;flex:0 0 auto;}
+  .status-row .nm{font-weight:600;font-size:13px;color:#fff;}
+  .status-row .ds{font-size:11.5px;color:#9eb3d1;margin-left:auto;}
+  .pip-blue{background:#1c7bd1;box-shadow:0 0 10px #1c7bd180}
+  .pip-amber{background:#f0a93b;box-shadow:0 0 10px #f0a93b80}
+  .pip-pink{background:#e0277f;box-shadow:0 0 10px #e0277f80}
+  .pip-green{background:#2bb073;box-shadow:0 0 10px #2bb07380}
+  .pip-grey{background:#6b7a90}
+
+  /* bottom note */
+  .flow-note{margin-top:32px;padding:16px 20px;background:rgba(28,123,209,.08);border:1px solid rgba(28,123,209,.2);border-radius:14px;display:flex;align-items:flex-start;gap:14px;font-size:13px;color:#9eb3d1;line-height:1.65;}
+  .flow-note .ni{flex:0 0 auto;color:#7fb6ee;margin-top:2px;}
+
+  @media(max-width:860px){.flow-board{grid-template-columns:1fr;} .flow-card:not(:last-child)::after{display:none;}}
+  @media(max-width:560px){.wrap{padding:0 16px;} .workflow{padding:48px 0 60px;}}
+</style>
+</head>
+<body>
+<section class="workflow">
+  <div class="wrap">
+
+    <span class="badge"><span class="dot"></span>Internal Backend Workflow</span>
+    <h2 class="section-title">What happens <span class="gr">after you submit.</span></h2>
+    <p class="section-sub">Behind the form, your submission is automatically routed through MCMC's secure pipeline. Here's how ETAD turns it around.</p>
+
+    <div class="flow-board">
+
+      <!-- Column 1: Submission -->
+      <div class="flow-card">
+        <div class="flow-card-inner">
+          <h4><span class="dot"></span>Submission</h4>
+          <p class="desc">The applicant submits via Microsoft Forms. Data is validated and timestamped at source.</p>
+          <div class="flow-step">
+            <span class="ic">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
+            </span>
+            <div>
+              <div class="lbl">Microsoft Forms</div>
+              <div class="sub">Applicant submits EOI</div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <span class="ic">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 12 5 5L20 6"/></svg>
+            </span>
+            <div>
+              <div class="lbl">Validation</div>
+              <div class="sub">Required fields &amp; format check</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Column 3: Status Tracking -->
+      <div class="flow-card">
+        <div class="flow-card-inner">
+          <h4><span class="dot"></span>Status Tracking</h4>
+          <p class="desc">Each EOI carries a live status the applicant is updated against at every stage.</p>
+          <div class="status-list">
+            <div class="status-row"><span class="pip pip-blue"></span><span class="nm">Submitted</span><span class="ds">Day 0</span></div>
+            <div class="status-row"><span class="pip pip-amber"></span><span class="nm">Under Review</span><span class="ds">Days 1–10</span></div>
+            <div class="status-row"><span class="pip pip-pink"></span><span class="nm">Shortlisted</span><span class="ds">Days 10–15</span></div>
+            <div class="status-row"><span class="pip pip-green"></span><span class="nm">Accepted</span><span class="ds">Decision</span></div>
+            <div class="status-row"><span class="pip pip-grey"></span><span class="nm">Not Proceeding</span><span class="ds">Decision</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+</section>
+</body>
+</html>
