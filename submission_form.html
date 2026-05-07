@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EOI · Collaborate with ETAD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:transparent;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:#1a2340;-webkit-font-smoothing:antialiased;min-height:100vh}
+
+  /* ── HERO WRAPPER ── */
+  .hero-wrap{background:transparent;border-bottom:none;}
+  .hero-inner{max-width:960px;margin:0 auto;padding:0 20px;}
+
+  /* ── HERO ── */
+  .hero{position:relative;display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center;padding:64px 0 72px;overflow:hidden;}
+  .hero-watermark{position:absolute;top:30%;left:-10px;transform:translateY(-50%);pointer-events:none;z-index:0;overflow:hidden;}
+  .hero-watermark span{font-family:"Sora",sans-serif;font-weight:800;font-size:clamp(100px,17vw,200px);letter-spacing:-0.04em;color:rgba(10,30,20,.07);white-space:nowrap;user-select:none;line-height:1;display:block;}
+  .hero-text{position:relative;z-index:1;}
+  .hero-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;border-radius:999px;background:#e6faf5;border:1px solid #9de8d8;font-family:"Sora",sans-serif;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#0a8c7a;margin-bottom:18px;}
+  .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:#0a8c7a;}
+  .hero-h1{font-family:"Sora",sans-serif;font-weight:800;font-size:clamp(32px,4.5vw,56px);line-height:1.05;letter-spacing:-0.03em;color:#080f22;margin-bottom:18px;}
+  .hero-h1 .blue{color:#1a3fa0;}
+  .hero-p{font-size:14.5px;color:#5a6880;line-height:1.72;max-width:420px;margin-bottom:32px;}
+  .hero-cta{display:inline-flex;align-items:center;gap:10px;padding:13px 28px;border-radius:8px;background:#1a3fa0;color:#fff;font-family:"Sora",sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;box-shadow:0 4px 18px rgba(26,63,160,.3);transition:all .18s;text-decoration:none;}
+  .hero-cta:hover{background:#0f2d80;transform:translateY(-1px);}
+  .hero-visual{position:relative;z-index:1;border-radius:16px;overflow:hidden;box-shadow:0 32px 80px rgba(15,30,80,.14),0 4px 16px rgba(15,30,80,.07);background:#fff;border:1px solid #e2e8f2;}
+
+  /* ── MOCK FORM ── */
+  .mock-topbar{background:#fff;border-bottom:1px solid #edebe9;padding:10px 14px;display:flex;align-items:center;gap:8px;}
+  .m-logo{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#242424;}
+  .m-logo-sq{width:16px;height:16px;display:grid;grid-template-columns:1fr 1fr;gap:1.5px;}
+  .m-logo-sq span{border-radius:1px;}
+  .m-logo-sq span:nth-child(1){background:#0d9e8a}
+  .m-logo-sq span:nth-child(2){background:#07c49a}
+  .m-logo-sq span:nth-child(3){background:#07c49a}
+  .m-logo-sq span:nth-child(4){background:#9de8d8}
+  .m-name{font-size:11px;color:#605e5c;margin-left:4px;}
+  .m-share{margin-left:auto;background:linear-gradient(135deg,#0d9e8a,#07c49a);color:#fff;font-size:10px;font-weight:700;padding:4px 10px;border-radius:3px;}
+  .mock-body{padding:14px;}
+  .mock-header-strip{height:6px;background:linear-gradient(90deg,#0d9e8a,#07c49a);border-radius:3px 3px 0 0;}
+  .mock-title-card{background:#fff;border:1px solid #e8e8e8;border-radius:0 0 6px 6px;padding:12px 14px 10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.08);}
+  .mock-title-card h4{font-size:11px;font-weight:700;color:#242424;margin-bottom:4px;}
+  .mock-title-card p{font-size:9px;color:#797775;line-height:1.5;}
+  .mock-req{font-size:8.5px;color:#a4262c;margin-top:6px;}
+  .mock-card{background:#fff;border:1px solid #e8e8e8;border-radius:5px;padding:10px 12px;margin-bottom:6px;box-shadow:0 1px 3px rgba(0,0,0,.06);border-left:2.5px solid transparent;}
+  .mock-card.focus{border-left-color:#0d9e8a;}
+  .mc-label{font-size:9px;font-weight:700;color:#242424;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;}
+  .mc-label span{color:#a4262c;}
+  .mc-input{height:14px;border-bottom:1.5px solid #c8c6c4;margin-bottom:6px;}
+  .mc-input.active{border-bottom-color:#0d9e8a;}
+  .mc-two{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .mock-section{font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#0d9e8a;padding:4px 0 3px;border-bottom:1px solid #e1dfdd;margin-bottom:5px;}
+
+  /* ── PAGE ── */
+  .page{max-width:960px;margin:0 auto;padding:32px 20px 80px;}
+  .top-badge{display:inline-flex;align-items:center;gap:6px;font-family:"Sora",sans-serif;font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#0a8c7a;margin-bottom:10px;}
+  .top-badge .dot{width:5px;height:5px;border-radius:50%;background:#0a8c7a;}
+  .page-h1{font-family:"Sora",sans-serif;font-weight:800;font-size:clamp(26px,4vw,38px);letter-spacing:-0.025em;line-height:1.1;color:#080f22;margin-bottom:8px;}
+  .page-h1 em{font-style:normal;color:#0a8c7a;}
+  .page-sub{font-size:12.5px;color:#6b7a97;line-height:1.65;max-width:560px;margin-bottom:18px;}
+  .ms-banner{display:flex;align-items:center;gap:12px;background:#0f1d3a;border-radius:10px;padding:12px 16px;margin-bottom:22px;}
+  .ms-icon{width:30px;height:30px;border-radius:6px;background:#0d9e8a;display:grid;place-items:center;flex:0 0 auto;}
+  .ms-icon svg{color:#fff;}
+  .ms-txt{flex:1;min-width:0;}
+  .ms-txt strong{display:block;font-size:12.5px;font-weight:700;color:#fff;margin-bottom:1px;}
+  .ms-txt span{font-size:11px;color:rgba(255,255,255,.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+  .ms-open{padding:7px 14px;border-radius:7px;background:#0d9e8a;color:#fff;font-family:"Sora",sans-serif;font-size:11.5px;font-weight:700;border:none;cursor:pointer;white-space:nowrap;flex:0 0 auto;}
+  .ms-open:hover{background:#0a8070;}
+
+  /* ── FORM LAYOUT ── */
+  .layout{display:grid;grid-template-columns:1fr;gap:12px;}
+
+  /* ── SECTION CARD ── */
+  .sc{background:rgba(255,255,255,0.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.75);border-radius:16px;padding:20px 22px 18px;box-shadow:0 8px 32px rgba(80,80,180,.08),0 1.5px 4px rgba(80,80,180,.06);transition:box-shadow .2s;}
+  .sc:hover{box-shadow:0 16px 40px rgba(0,160,130,.13),0 2px 6px rgba(0,160,130,.08);}
+  .sc-head{display:flex;align-items:center;gap:9px;margin-bottom:16px;}
+  .sc-pill{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,#0d9e8a,#07c49a);color:#fff;font-family:"Sora",sans-serif;font-size:11px;font-weight:700;display:grid;place-items:center;flex:0 0 auto;box-shadow:0 2px 8px rgba(0,160,130,.3);}
+  .sc-head h3{font-family:"Sora",sans-serif;font-size:13px;font-weight:700;color:#080f22;}
+
+  /* ── FIELDS ── */
+  .fg{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .f{display:flex;flex-direction:column;gap:4px;}
+  .f.full{grid-column:1/-1;}
+  label.fl{font-size:11.5px;font-weight:600;color:#2a3450;}
+  .req{color:#c0306a;margin-left:2px;}
+  .hint{font-size:10.5px;color:#9aa5bc;line-height:1.5;margin-top:2px;}
+  input[type=text],input[type=email],input[type=url],input[type=tel],select,textarea{width:100%;padding:9px 12px;border:1.5px solid rgba(255,255,255,0.7);border-radius:10px;font-family:"Plus Jakarta Sans",sans-serif;font-size:12.5px;color:#1a2340;background:rgba(255,255,255,0.45);backdrop-filter:blur(8px);outline:none;transition:border-color .15s,box-shadow .15s,background .15s;-webkit-appearance:none;}
+  input:focus,select:focus,textarea:focus{border-color:rgba(0,160,130,0.5);box-shadow:0 0 0 3px rgba(0,160,130,0.12);background:rgba(255,255,255,0.75);}
+  input::placeholder,textarea::placeholder{color:#a0aec8;font-size:12px;}
+  select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%238896b0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;padding-right:28px;}
+  textarea{resize:vertical;min-height:76px;line-height:1.5;}
+
+  /* ── CHECKBOX / RADIO ── */
+  .chk-group{display:flex;flex-direction:column;gap:2px;}
+  .chk-opt{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:7px;cursor:pointer;transition:background .12s;font-size:13px;color:#1a2340;}
+  .chk-opt:hover{background:rgba(255,255,255,0.4);}
+  .chk-opt input[type=checkbox],.chk-opt input[type=radio]{width:15px;height:15px;flex:0 0 auto;accent-color:#0d9e8a;cursor:pointer;}
+  .chk-opt span{font-size:13px;color:#1a2340;}
+  .other-input{margin-left:4px;flex:1;min-width:120px;padding:4px 8px;border:1.5px solid rgba(255,255,255,0.7);border-radius:5px;font-size:12px;color:#1a2340;background:rgba(255,255,255,0.45);outline:none;transition:border-color .14s;}
+  .other-input:focus{border-color:#0d9e8a;}
+
+  /* ── UPLOAD BOX ── */
+  .upload-box{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;background:#e0faf5;border:1px solid #9de8d8;border-radius:9px;font-size:12px;color:#3a4a6a;line-height:1.65;}
+  .upload-box .ico{flex:0 0 auto;width:28px;height:28px;border-radius:7px;background:#b2ede0;color:#0a8c7a;display:grid;place-items:center;}
+  .upload-box code{background:#b2ede0;color:#0a8c7a;padding:1px 5px;border-radius:3px;font-size:11px;font-family:"Consolas",monospace;}
+
+  /* ── ACTIONS ── */
+  .actions{display:flex;align-items:center;gap:10px;padding:14px 18px;background:rgba(255,255,255,0.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.75);border-radius:16px;box-shadow:0 8px 32px rgba(0,160,130,.08);}
+  .secure{display:flex;align-items:center;gap:5px;font-size:11px;color:#9aa5bc;margin-right:auto;}
+  .btn-r{padding:8px 18px;border-radius:7px;font-family:"Sora",sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,0.7);background:transparent;color:#6b7a97;transition:all .14s;}
+  .btn-r:hover{border-color:#aab3c8;}
+  .btn-s{padding:8px 20px;border-radius:7px;font-family:"Sora",sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;border:none;background:linear-gradient(135deg,#0d9e8a,#07c49a);color:#fff;box-shadow:0 3px 10px rgba(0,160,130,.3);display:flex;align-items:center;gap:6px;transition:all .14s;}
+  .btn-s:hover{background:#0a8070;}
+
+  @media(max-width:700px){.hero{grid-template-columns:1fr;gap:32px;padding:40px 0 48px;} .fg{grid-template-columns:1fr;} .page{padding:20px 12px 60px;}}
+
+  /* ── REDESIGNED MOCK ── */
+  .mock-topbar{background:#fff;border-bottom:1px solid #e8f0ee;padding:12px 16px;display:flex;align-items:center;gap:10px;}
+  .m-logo{display:flex;align-items:center;gap:8px;}
+  .m-logo-sq{width:20px;height:20px;display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+  .m-logo-sq span{border-radius:2px;}
+  .m-logo-sq span:nth-child(1){background:#0d9e8a}
+  .m-logo-sq span:nth-child(2){background:#07c49a}
+  .m-logo-sq span:nth-child(3){background:#07c49a}
+  .m-logo-sq span:nth-child(4){background:#9de8d8}
+  .m-name{font-size:12px;color:#888;margin-left:2px;}
+  .m-share{margin-left:auto;background:linear-gradient(135deg,#0d9e8a,#07c49a);color:#fff;font-size:11px;font-weight:700;padding:7px 14px;border-radius:8px;display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,160,130,.3);}
+
+  .mock-body{padding:12px;background:#f0fbf8;}
+
+  /* Header card */
+  .mock-header-card{background:linear-gradient(135deg,#fff 60%,#d0f5ee 100%);border:1px solid #d0ede8;border-radius:14px;padding:16px;margin-bottom:10px;display:flex;}
+  .mock-hc-left{display:flex;gap:12px;align-items:flex-start;}
+  .mock-glass-icon{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(208,245,238,.8));border:1.5px solid rgba(13,158,138,.2);display:grid;place-items:center;flex:0 0 auto;box-shadow:0 4px 16px rgba(13,158,138,.15);}
+  .mock-hc-title{font-size:12px;font-weight:700;color:#0a1628;margin-bottom:6px;line-height:1.35;}
+  .mock-hc-sub{font-size:9px;color:#6b7a97;line-height:1.6;margin-bottom:8px;}
+  .mock-required{font-size:9px;color:#a4262c;font-weight:600;}
+
+  /* Section label */
+  .mock-sec-label{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#0d9e8a;border-left:3px solid #0d9e8a;padding-left:8px;margin-bottom:8px;}
+
+  /* Question cards */
+  .mock-q-card{background:#fff;border:1px solid #e4eeec;border-radius:12px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;box-shadow:0 2px 8px rgba(13,158,138,.06);position:relative;}
+  .mock-q-card.full{width:100%;margin-bottom:6px;}
+  .mock-two-col{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;}
+  .mock-q-icon{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,rgba(208,245,238,.8),rgba(255,255,255,.9));border:1px solid rgba(13,158,138,.15);display:grid;place-items:center;flex:0 0 auto;}
+  .mock-q-body{flex:1;}
+  .mock-q-label{font-size:9.5px;font-weight:700;color:#1a2340;margin-bottom:5px;}
+  .mock-ast{color:#a4262c;margin-left:2px;}
+  .mock-q-input{font-size:8.5px;color:#c0c8da;border:1px solid #e4eeec;border-radius:6px;padding:5px 8px;background:#fafffe;}
+  .mock-q-textarea{font-size:8.5px;color:#c0c8da;border:1px solid #e4eeec;border-radius:6px;padding:5px 8px;background:#fafffe;min-height:36px;}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero-inner">
+    <section class="hero">
+      <div class="hero-watermark"><span>EOI</span></div>
+
+      <!-- Left text -->
+      <div class="hero-text">
+        <div class="hero-badge"><span class="dot"></span>EOI · Open Now</div>
+        <h1 class="hero-h1">Express Your<br><span class="blue">Interest.</span></h1>
+        <p class="hero-p">Thank you for your interest in collaborating with ETAD for co-development. Kindly fill in this form to share us your innovative ideas. We look forward to exploring innovative use cases together.</p>
+        <a href="#q1" class="hero-cta" onclick="document.getElementById('q1').scrollIntoView({behavior:'smooth'});return false;">Open the Form &nbsp;→</a>
+      </div>
+
+      <!-- Right: MS Form Mockup -->
+      <div class="hero-visual">
+
+        <!-- Top bar -->
+        <div class="mock-topbar">
+          <div class="m-logo">
+            <div class="m-logo-sq"><span></span><span></span><span></span><span></span></div>
+            <span style="font-weight:700;font-size:12px;color:#242424">Microsoft Forms</span>
+          </div>
+          <span class="m-name" style="font-size:12px;color:#888">· EOI Submission</span>
+          <div class="m-share">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Submit
+          </div>
+        </div>
+
+        <div class="mock-body">
+
+          <!-- Header card -->
+          <div class="mock-header-card">
+            <div class="mock-hc-left">
+              <div class="mock-glass-icon">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0d9e8a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="mock-hc-title">Expression of Interest —<br>Collaborate with ETAD</h4>
+                <p class="mock-hc-sub">Thank you for your interest in collaborating with ETAD (Education, Training, and Development). Please fill out this form to let us know more about you and how you would like to collaborate. We look forward to exploring opportunities together.</p>
+                <div class="mock-required">* Required</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section label -->
+          <div class="mock-sec-label">YOUR INFORMATION</div>
+
+          <!-- Full Name -->
+          <div class="mock-q-card full">
+            <div class="mock-q-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0d9e8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="mock-q-body">
+              <div class="mock-q-label">Full Name <span class="mock-ast">*</span></div>
+              <div class="mock-q-input">Enter your full name</div>
+            </div>
+          </div>
+
+          <!-- Division + Email (2 col) -->
+          <div class="mock-two-col">
+            <div class="mock-q-card">
+              <div class="mock-q-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0d9e8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+              </div>
+              <div class="mock-q-body">
+                <div class="mock-q-label">Division or Department <span class="mock-ast">*</span></div>
+                <div class="mock-q-input">Enter your division or department</div>
+              </div>
+            </div>
+            <div class="mock-q-card">
+              <div class="mock-q-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0d9e8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </div>
+              <div class="mock-q-body">
+                <div class="mock-q-label">Email Address <span class="mock-ast">*</span></div>
+                <div class="mock-q-input">Enter your email address</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="mock-q-card full">
+            <div class="mock-q-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0d9e8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.59 3.47 2 2 0 0 1 3.56 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+            </div>
+            <div class="mock-q-body">
+              <div class="mock-q-label">Phone Number</div>
+              <div class="mock-q-input">Enter your phone number</div>
+            </div>
+          </div>
+
+          <!-- Problem Statement -->
+          <div class="mock-q-card full">
+            <div class="mock-q-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0d9e8a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="mock-q-body">
+              <div class="mock-q-label">Problem Statement <span class="mock-ast">*</span></div>
+              <div class="mock-q-textarea">Describe the problem or opportunity you would like to address</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
